@@ -12,7 +12,7 @@ public class Balance {
     private int currentBalance;
 
     public Optional<Transaction> add(int amount) {
-        if (currentBalance + amount == Integer.MIN_VALUE) { // Int.Max + 1 == Overflow
+        if (amount < 0 || currentBalance + amount == Integer.MIN_VALUE) { // Int.Max + 1 == Overflow to Int.Min
             return Optional.empty();
         }
         currentBalance += amount;
@@ -20,7 +20,7 @@ public class Balance {
     }
 
     public Optional<Transaction> subtract(int amount) {
-        if (currentBalance - amount < 0) {
+        if (amount < 0 || currentBalance - amount < 0) {
             return Optional.empty();
         }
         currentBalance -= amount;

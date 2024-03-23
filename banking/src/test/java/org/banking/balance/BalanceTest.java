@@ -2,6 +2,8 @@ package org.banking.balance;
 
 import org.banking.Transaction;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Optional;
 
@@ -9,60 +11,59 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BalanceTest {
 
-    @Test
-    void shouldAdd_WithSuccess() {
-
+    @ParameterizedTest
+    @ValueSource(ints = {0, 500, 250_000})
+    void shouldAdd_WithSuccess(int addAmount) {
         // Given
         Balance balance = new Balance();
-        int depositSum = 500;
         int lastBalance = balance.getCurrentBalance();
 
         // When
-        Optional<Transaction> result = balance.add(depositSum);
+        Optional<Transaction> result = balance.add(addAmount);
 
         // Then
-        assertEquals(lastBalance + depositSum, result.get().balance());
-        assertEquals(depositSum, result.get().amount());
+        assertEquals(lastBalance + addAmount, result.get().balance());
+        assertEquals(addAmount, result.get().amount());
     }
 
-    @Test
-    void shouldAdd_WithFail() {
+    @ParameterizedTest
+    @ValueSource(ints = {-1, Integer.MAX_VALUE + 1})
+    void shouldAdd_WithFail(int amount) {
         // Given
         Balance balance = new Balance();
-        int depositSum = Integer.MAX_VALUE;
 
         // When
-        Optional<Transaction> result = balance.add(depositSum + 1);
+        Optional<Transaction> result = balance.add(amount);
 
         // Then
         assertEquals(Optional.empty(), result);
     }
 
-    @Test
-    void shouldReduce_WithSuccess() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 500, 250_000})
+    void shouldReduce_WithSuccess(int amount) {
         // Given
         Balance balance = new Balance();
-        balance.add(500);
-        int withdrawSum = 100;
+        balance.add(Integer.MAX_VALUE);
         int lastBalance = balance.getCurrentBalance();
 
         // When
-        Optional<Transaction> result = balance.subtract(withdrawSum);
+        Optional<Transaction> result = balance.subtract(amount);
 
         // Then
-        assertEquals(lastBalance - withdrawSum, result.get().balance());
-        assertEquals(withdrawSum, - result.get().amount());
+        assertEquals(lastBalance - amount, result.get().balance());
+        assertEquals(amount, - result.get().amount());
     }
 
-    @Test
-    void shouldReduce_WithFail() {
+    @ParameterizedTest
+    @ValueSource(ints = {100, -20})
+    void shouldReduce_WithFail(int amount) {
         // Given
         Balance balance = new Balance();
-        balance.add(100);
-        int withdrawSum = 2000;
+        balance.add(50);
 
         // When
-        Optional<Transaction> result = balance.subtract(withdrawSum);
+        Optional<Transaction> result = balance.subtract(amount);
 
         // Then
         assertEquals(Optional.empty(), result);
