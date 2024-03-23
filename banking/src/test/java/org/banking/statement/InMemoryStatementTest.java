@@ -1,6 +1,5 @@
-package org.banking.transaction;
+package org.banking.statement;
 
-import org.banking.statement.InMemoryStatement;
 import org.banking.Transaction;
 import org.junit.jupiter.api.Test;
 
