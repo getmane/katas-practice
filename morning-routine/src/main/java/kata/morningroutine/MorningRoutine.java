@@ -21,7 +21,8 @@ public class MorningRoutine {
     String getCurrentRoutine(LocalTime time) {
         return this.routines.stream()
                 .filter(routine -> shouldPerformRoutine(routine, time))
-                .findFirst().orElse(new NoActivity()).toString();
+                .findFirst().orElse(new NoActivity())
+                .getRoutine();
     }
 
     private boolean shouldPerformRoutine(Routine routine, LocalTime currentTime) {

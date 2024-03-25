@@ -14,7 +14,7 @@ public class NoActivity implements Routine {
     }
 
     @Override
-    public String toString() {
+    public String getRoutine() {
         return this.name;
     }
 

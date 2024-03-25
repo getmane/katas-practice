@@ -18,7 +18,7 @@ public class ReadAndStudy implements Routine {
     }
 
     @Override
-    public String toString() {
+    public String getRoutine() {
         return this.name;
     }
 }
