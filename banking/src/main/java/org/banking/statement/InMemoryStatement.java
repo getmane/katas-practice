@@ -24,7 +24,7 @@ public class InMemoryStatement implements Statement {
     public Optional<Transaction> getLastTransaction() {
         return transactions.isEmpty()
                 ? Optional.empty()
-                : Optional.ofNullable(transactions.get(transactions.size() - 1));
+                : Optional.ofNullable(transactions.getLast());
     }
 
     @Override

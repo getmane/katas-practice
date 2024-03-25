@@ -10,5 +10,4 @@ public interface Statement {
 
     Optional<Transaction> getLastTransaction();
 
-    String toString();
 }
